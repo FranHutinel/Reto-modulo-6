@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generador de Cartones de Lotería</title>
+</head>
+<body>
+  <h1>Generador de Cartones de Lotería</h1>
+  <button id="nuevoCarton">Generar Nuevo Cartón</button>
+  <div id="cartones"></div>
+
+  <script>
+    const nuevoCartonBtn = document.querySelector('#nuevoCarton');
+    const cartonesDiv = document.querySelector('#cartones');
+
+    // Función para mostrar los cartones en la página
+    function mostrarCartones(cartones) {
+      let html = '';
+      for (let carton of cartones) {
+        html += `<p>Cartón ${carton.id}: ${carton.numeros.join(', ')}</p>`;
+      }
+      cartonesDiv.innerHTML = html;
+    }
+
+    // Evento click del botón "Generar Nuevo Cartón"
+    nuevoCartonBtn.addEventListener('click', () => {
+      fetch('http://localhost:3000/cartones', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      })
+      .then(res => res.json())
+      .then(carton => {
+        mostrarCartones([carton]);
+      })
+      .catch(err => console.error(err));
+    });
+
+    // Cargar los cartones existentes al cargar la página
+    fetch('http://localhost:3000/cartones')
+      .then(res => res.json())
+      .then(cartones => {
+        mostrarCartones(cartones);
+      })
+      .catch(err => console.error(err));
+  </script>
+</body>
+</html>

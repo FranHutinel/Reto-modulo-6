@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Listado de Cartones</title>
+  </head>
+  <body>
+    <h1>Listado de Cartones</h1>
+    <ul id="cartones"></ul>
+    <script>
+      fetch('http://localhost:3000/cartones')
+        .then(response => response.json())
+        .then(cartones => {
+          const ul = document.querySelector('#cartones');
+          for (const carton of cartones) {
+            const li = document.createElement('li');
+            li.textContent = `ID: ${carton.id}, Números: ${carton.numeros.join(', ')}`;
+            ul.appendChild(li);
+          }
+        })
+        .catch(error => console.error(error));
+    </script>
+  </body>
+</html>
+
