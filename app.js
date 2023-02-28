@@ -8,7 +8,7 @@ app.use(cors());
 
 let cartones = [];
 
-// Generar los primeros 5 cartones
+// Generar los primeros 5 cartones...
 for (let i = 1; i <= 5; i++) {
   let carton = {
     id: i,
